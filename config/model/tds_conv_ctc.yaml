@@ -1,10 +1,20 @@
 # @package _global_
+# module:
+#   _target_: emg2qwerty.lightning.TDSConvCTCModule
+#   in_features: 528  # freq * channels = (n_fft // 2 + 1) * 16
+#   mlp_features: [384]
+#   block_channels: [24, 24, 24, 24]
+#   kernel_width: 32  # Total temporal receptive field of 125 samples given 4 layers
+
 module:
-  _target_: emg2qwerty.lightning.TDSConvCTCModule
+  _target_: emg2qwerty.lightning.TDSRNNCTCModule
   in_features: 528  # freq * channels = (n_fft // 2 + 1) * 16
   mlp_features: [384]
   block_channels: [24, 24, 24, 24]
   kernel_width: 32  # Total temporal receptive field of 125 samples given 4 layers
+  rnn_hidden_size: 128   # 可根据需要调整
+  rnn_num_layers: 1      # RNN 层数
+  rnn_type: RNN         # LSTM, GRU or RNN
 
 datamodule:
   _target_: emg2qwerty.lightning.WindowedEMGDataModule
