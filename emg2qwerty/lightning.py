@@ -271,8 +271,8 @@ class TDSConvCTCModule(pl.LightningModule):
         )
 
 
-# Self-defined RNN Module
-class TDSRNNCTCModule(pl.LightningModule):
+# CNN + RNN Module
+class TDSConvRNNCTCModule(pl.LightningModule):
     NUM_BANDS: ClassVar[int] = 2
     ELECTRODE_CHANNELS: ClassVar[int] = 16
 

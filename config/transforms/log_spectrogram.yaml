@@ -25,6 +25,11 @@ specaug:
   n_freq_masks: 2
   freq_mask_param: 4
 
+# TODO: experiment on this augment method
+add_gaussian_noise:
+  _target_: emg2qwerty.transforms.AddGaussianNoise
+  sigma: 0.01
+
 transforms:
   train:
     - ${to_tensor}
@@ -32,6 +37,8 @@ transforms:
     - ${temporal_jitter}
     - ${logspec}
     - ${specaug}
+# TODO: experiment on this augment method
+    - ${add_gaussian_noise}
 
   val:
     - ${to_tensor}
