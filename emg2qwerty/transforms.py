@@ -257,3 +257,25 @@ class AddGaussianNoise:
     def __call__(self, tensor: torch.Tensor) -> torch.Tensor:
         noise = torch.randn_like(tensor) * self.sigma
         return tensor + noise
+
+@dataclass
+class ChannelDropout:
+    """Randomly dropping out some channels' data
+
+    Args:
+        dropout_prob (float): default 0.5.
+        channel_dim (int): which dimension
+    """
+    dropout_prob: float = 0.5
+    channel_dim: int = -1
+
+    def __call__(self, tensor: torch.Tensor) -> torch.Tensor:
+        mask_shape = [1] * tensor.ndim
+        mask_shape[self.channel_dim] = tensor.size(self.channel_dim)
+        mask = (torch.rand(mask_shape, device=tensor.device) > self.dropout_prob).float()
+
+        if self.dropout_prob < 1.0:
+            tensor = tensor * mask / (1.0 - self.dropout_prob)
+        else:
+            tensor = tensor * mask
+        return tensor

@@ -21,7 +21,7 @@ trainer:
   devices: 1
   num_nodes: 1
   # TODO: modify max_epochs
-  max_epochs: 100
+  max_epochs: 50
   default_root_dir: ${hydra:runtime.output_dir}
 
 callbacks:

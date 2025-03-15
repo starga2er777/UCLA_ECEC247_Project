@@ -28,7 +28,12 @@ specaug:
 # TODO: experiment on this augment method
 add_gaussian_noise:
   _target_: emg2qwerty.transforms.AddGaussianNoise
-  sigma: 0.01
+  sigma: 0.001
+
+# TODO: experiment on this augment method
+channel_dropout:
+  _target_: emg2qwerty.transforms.ChannelDropout
+  dropout_prob: 0.25
 
 transforms:
   train:
@@ -38,7 +43,9 @@ transforms:
     - ${logspec}
     - ${specaug}
 # TODO: experiment on this augment method
-    - ${add_gaussian_noise}
+
+    # - ${channel_dropout}
+
 
   val:
     - ${to_tensor}
